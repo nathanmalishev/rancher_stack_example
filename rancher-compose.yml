@@ -1,0 +1,16 @@
+version: '2'
+services:
+  route53:
+    scale: 1
+    start_on_create: true
+    health_check:
+      healthy_threshold: 2
+      response_timeout: 8000
+      port: 1000
+      unhealthy_threshold: 2
+      interval: 10000
+      strategy: recreate
+      request_line: GET / HTTP/1.0
+  Rancher-Active-Proxy:
+      scale: 1
+      start_on_create: true
