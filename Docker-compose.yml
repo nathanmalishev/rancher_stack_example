@@ -1,25 +1,5 @@
 version: '2'
 services:
-  route53:
-    image: rancher/external-dns:v0.7.7
-    environment:
-      AWS_ACCESS_KEY: "${AWS_ACCESS_KEY}"
-      AWS_SECRET_KEY: "${AWS_SECRET_KEY}"
-      NAME_TEMPLATE: '%{{service_name}}.%{{stack_name}}.%{{environment_name}}'
-      ROOT_DOMAIN: nathanmalishev.com
-      ROUTE53_MAX_RETRIES: '3'
-      ROUTE53_ZONE_ID: ''
-      TTL: '60'
-    volumes:
-    - /var/lib/rancher:/var/lib/rancher
-    expose:
-    - '1000'
-    command:
-    - -provider=route53
-    labels:
-      io.rancher.container.agent.role: external-dns
-      io.rancher.container.create_agent: 'true'
-
   Rancher-Active-Proxy:
     image: adi90x/rancher-active-proxy
     environment:
@@ -39,4 +19,5 @@ services:
     - 443:443/tcp
     labels:
       io.rancher.container.pull_image: always
-
+      # Make wordpress a global service
+      io.rancher.scheduler.global: 'true'
